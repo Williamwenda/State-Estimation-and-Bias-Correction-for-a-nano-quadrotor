@@ -1,0 +1,149 @@
+% Template last modified by Jake Hart; please contact course staff if you have any questions regarding using this template
+
+\documentclass{cisXXX} % You must have the cisXXX .cls file in your project or working directory (i.e. the same directory as this document) 
+
+\HWauthor{Wenda Zhao, Sasan Vakili}{} % Put your name and Penn email on this line
+\HWno{1} % Enter the number of the homework you are working on
+\HWcourse{AER1513H} % Enter the course department and number here
+%\HWpartner{Paul Brown} % If your class allows group work, put your partners here
+%\HWpartner{Amelia Earhart} % Otherwise, delete or comment these lines 
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{bm}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+%\usepackage{\xcolor}
+\renewcommand\arraystretch{1.2}
+
+\begin{document}
+\maketitle
+%\HWproblem
+The motion model for quadrotor we define in our project is 
+\begin{equation}
+\begin{bmatrix}
+x_k \\
+y_k \\
+z_k
+\end{bmatrix}=\begin{bmatrix}
+x_{k-1} \\
+y_{k-1} \\
+z_{k-1}
+\end{bmatrix}+T\begin{bmatrix}
+v_{x(k-1)} \\
+v_{y(k-1)} \\
+v_{z(k-1)} 
+\end{bmatrix}+\frac{1}{2}T^2\left(R^T_{3\times3}\begin{bmatrix}
+a_x   \\
+a_y   \\
+a_z
+\end{bmatrix}-g\begin{bmatrix}
+1  \\
+1  \\
+1
+\end{bmatrix}\right)
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+v_{x(k)} \\
+v_{y(k)} \\
+v_{z(k)} 
+\end{bmatrix}=\begin{bmatrix}
+v_{x(k-1)} \\
+v_{y(k-1)} \\
+v_{z(k-1)} 
+\end{bmatrix}+T\left(R^T_{3\times3}\begin{bmatrix}
+a_x   \\
+a_y   \\
+a_z
+\end{bmatrix}-g\begin{bmatrix}
+1  \\
+1  \\
+1
+\end{bmatrix}\right)
+\end{equation}
+where $(x,y,z)^T$ is the position of quadrotor and $(v_X,v_y,v_z)$ is the velocity. $T$ is the sampling time period, $g$ is the gravity and $R^T_{3\times3}$ is the rotation matrix from body frame to global frame.The motion model can be further expressed into state space equation.
+\begin{equation}
+\begin{bmatrix}
+x_k \\
+y_k \\
+z_k \\
+v_{x(k)} \\
+v_{y(k)} \\
+v_{z(k)} 
+\end{bmatrix}=\begin{bmatrix}
+1  & 0  & 0  & T  & 0  & 0 \\
+0  & 1  & 0  & 0  & T  & 0 \\
+0  & 0  & 1  & 0  & 0  & T \\
+0  & 0  & 0  & 1  & 0  & 0 \\
+0  & 0  & 0  & 0  & 1  & 0 \\
+0  & 0  & 0  & 0  & 0  & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+x_{k-1} \\
+y_{k-1} \\
+z_{k-1} \\
+v_{x(k-1)} \\
+v_{y(k-1)} \\
+v_{z(k-1)} 
+\end{bmatrix}+\begin{bmatrix}
+\frac{1}{2}T^2  & 0     & 0   \\
+0      &\frac{1}{2}T^2  & 0   \\
+0      & 0  & \frac{1}{2}T^2  \\
+T      & 0              & 0   \\
+0      & T              & 0   \\
+0      & 0              & T
+\end{bmatrix}\left( R^T_{3\times3}\begin{bmatrix}
+a_x  \\
+a_y  \\
+a_z
+\end{bmatrix}-g\begin{bmatrix}
+1  \\
+1  \\
+1
+\end{bmatrix}
+\right)
+\end{equation}
+Rotation matrix can be expressed by unit quaternion $q=(q_0, \bm{\vec{q_v}})^T$
+$$
+R^T_{3\times3}=(2q_0^2-1)\bm{1}_{3\times3}+2\bm{\vec{q_v}}\bm{\vec{q_v}}^T-2q_0\bm{\vec{q_v}}^{\times}
+$$
+where $\bm{\vec{q_v}}^{\times}$ is the skew-symmetric cross product matrix of $\bm{\vec{q_v}}$.
+
+Observation model
+\begin{equation}
+\begin{bmatrix}
+z_k     \\
+v_{x(k)}  \\
+v_{y(k)}
+\end{bmatrix} = \begin{bmatrix}
+0  & 0  & 1  & 0  & 0  & 0    \\
+0  & 0  & 0  & 1  & 0  & 0    \\
+0  & 0  & 0  & 0  & 1  & 0    
+\end{bmatrix}\begin{bmatrix}
+x_k \\
+y_k \\
+z_k \\
+v_{x(k)} \\
+v_{y(k)} \\
+v_{z(k)}
+\end{bmatrix}
+\end{equation}
+
+Data source:
+\begin{itemize}
+\item Input: unit quaternion $q=(q_0, \bm{\vec{q_v}})^T$ from onboard extended Kalman filter. (collected)
+
+\item Input: acceleration $a=(a_x, a_y, a_z)^T$ from onboard IMU. (collected)
+\item Measurements: $(z, v_x,v_y)^T$ from flowdeck.(collected)
+\end{itemize}
+
+
+\end{document}
+
+
+
+
+
+
