@@ -1,4 +1,4 @@
-## State Estimation and Bisa Correction for a nano quadrotor
+## State Estimation and Bias Correction for a nano quadrotor
 This is the final course project of AER 1513 State Estimation for Aerospace Vehicles, University of Toronto.
 
 An extended Kalman Filter is built to estimate the fullstate of a nano quadrotor (Crazyflie). The fullstate includes
