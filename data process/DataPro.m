@@ -2,7 +2,7 @@ clc
 close all
 clear all
 %%
-FolderName = '/home/william/Desktop/Homework/SE-finalpro/code-ongoing/rawdata';
+FolderName = '/home/william/Desktop/Homework/State Estimation/SE-finalpro/State Estimation and Bisa Correction for a nano quadrotor/data process/rawdata/';
 FileName   = 'ViconZ_V.mat';
 ViconZV    = fullfile(FolderName, FileName);
 FileName   = 'kalman_state.mat';
