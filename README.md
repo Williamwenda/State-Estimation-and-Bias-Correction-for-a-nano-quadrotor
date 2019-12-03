@@ -13,6 +13,6 @@ The estimator is implemented offline based on the real dataset from Crazyflie pl
 the nano quadrotor was doing a circle and built our real dataset. All the codes, including data process, EKF without bias 
 correction and EKF with bias correction, are provided. The final report is in IROS template. 
 
-
+The Extended Kalman Filter codes with and without bias compensation are contained in folder "Extended Kalman Filter". The main code is Crazyflie_EKF.m. For code testing, please run "Crazyflie_EKF(1,1)" in matlab terminal. Notice, the Aerospace Toolbox from Matlab is needed for the quaternion calculation.
 
 
